@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <question_pending>
+            <question>
+                <is_enabled>0</is_enabled>
+                <textarea>Con thuy van chuyen tron viec hoho</textarea>
+            </question>
+        </question_pending>
+    </default>
+</config>

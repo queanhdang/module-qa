@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\question\Block\Customer\View $block */
+
+$product = $block->getProductData();
+?>
+<?php if ($product->getId()) : ?>
+<div class="customer-question view">
+    <div class="product-details">
+        <div class="product-media">
+            <a class="product-photo" href="<?= $block->escapeUrl($product->getProductUrl()) ?>">
+                <?php /* customer_account_product_question_page */ ?>
+                <?= $block->getImage($block->getProductData(), 'customer_account_product_question_page')->toHtml() ?>
+            </a>
+        </div>
+        <div class="product-info">
+            <h2 class="product-name"><?= $block->escapeHtml($product->getName()) ?></h2>
+        </div>
+    </div>
+
+    <div class="question-details">
+        <div class="detail-question"><?= $block->escapeHtml($block->getQuestionData()->getQuestion()) ?></div>
+        <div class="detail-answer"><?= /* @noEscape */ nl2br($block->escapeHtml($block->getquestionData()->getAnswer())) ?></div>
+        <div class="detail-date">
+            <?= $block->escapeHtml(__('Submitted on %1', '<time class="date">' . $block->dateFormat($block->getQuestionData()->getCreatedAt()) . '</time>'), ['time']) ?>
+        </div>
+    </div>
+</div>
+<div class="actions-toolbar">
+    <div class="secondary">
+        <a class="action back" href="<?= $block->escapeUrl($block->getBackUrl()) ?>"><span><?= $block->escapeHtml(__('Back to My questions')) ?></span></a>
+    </div>
+</div>
+<?php endif; ?>

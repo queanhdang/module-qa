@@ -1,0 +1,61 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \AHT\QA\Block\Customer\ListQuestion $block */
+?>
+<?php if (count($block->getQuestions())) : ?>
+    <div class="table-wrapper questions">
+        <table class="data table table-questions" id="my-questions-table">
+            <caption class="table-caption"><?= $block->escapeHtml(__('Product questions')) ?></caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="col date"><?= $block->escapeHtml(__('Created')) ?></th>
+                    <th scope="col" class="col item"><?= $block->escapeHtml(__('Product Name')) ?></th>
+                    <th scope="col" class="col question"><?= $block->escapeHtml(__('Question')) ?></th>
+                    <th scope="col" class="col answer"><?= $block->escapeHtml(__('Answer')) ?></th>
+                    <th scope="col" class="col actions">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($block->getQuestions() as $question) : ?>
+                <tr>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Created')) ?>" class="col date"><?= $block->escapeHtml($block->dateFormat($question->getCreatedAt())) ?></td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Product Name')) ?>" class="col name">
+                        <strong class="product-name">
+                            <a href="<?= $block->escapeUrl($block->getProductUrl($block->getProductById($question->getProductId()))) ?>"><?= $block->getProductById($question->getProductId())->getName() ?></a>
+                        </strong>
+                    </td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Question')) ?>" class="col question">
+                        <?= $block->escapeHtml($question->getQuestion()) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Answer')) ?>" class="col answer">
+                        <?= $block->escapeHtml($question->getAnswer()) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Actions')) ?>" class="col actions">
+                        <a href="<?= $block->escapeUrl($block->getQuestionUrl($question)) ?>" class="action more">
+                            <span><?= $block->escapeHtml(__('See Details')) ?></span>
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getToolbarHtml()) : ?>
+        <div class="toolbar products-questions-toolbar bottom">
+            <?= $block->getToolbarHtml() ?>
+        </div>
+    <?php endif; ?>
+<?php else : ?>
+    <div class="message info empty"><span><?= $block->escapeHtml(__('You have submitted no questions.')) ?></span></div>
+<?php endif; ?>
+<div class="actions-toolbar">
+    <div class="secondary">
+        <a class="action back" href="<?= $block->escapeUrl($block->getBackUrl()) ?>">
+            <span><?= $block->escapeHtml(__('Back')) ?></span>
+        </a>
+    </div>
+</div>
