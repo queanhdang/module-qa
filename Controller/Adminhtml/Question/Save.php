@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 namespace AHT\QA\Controller\Adminhtml\Question;
-
+use AHT\QA\Model\Question\ImageUploader;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Backend\App\Action\Context;
 use AHT\QA\Model\ResourceModel\Question as Resource;
@@ -33,7 +33,8 @@ class Save extends \AHT\QA\Controller\Adminhtml\Block implements HttpPostActionI
      * @var BlockRepositoryInterface
      */
     private $blockRepository;
-
+    
+    private $imageUploader;
     /**
      * @param Context $context
      * @param Registry $coreRegistry
@@ -46,12 +47,13 @@ class Save extends \AHT\QA\Controller\Adminhtml\Block implements HttpPostActionI
         Registry $coreRegistry,
         DataPersistorInterface $dataPersistor,
         QuestionFactory $questionFactory,
-        Resource $resource
+        Resource $resource,
+        ImageUploader $imageUploader
     ) {
         $this->dataPersistor = $dataPersistor;
         $this->questionFactory = $questionFactory;
         $this->resource = $resource;
-
+        $this->imageUploader = $imageUploader;
         parent::__construct($context, $coreRegistry);
     }
 
@@ -75,6 +77,12 @@ class Save extends \AHT\QA\Controller\Adminhtml\Block implements HttpPostActionI
             $model = $this->questionFactory->create();
 
             $id = $this->getRequest()->getParam('qa_id');
+            if (isset($data['image_path'])) {
+                $imageName = $data['image_path'];
+            }
+            if (isset($data['image'][0]['name'])) {
+                $imageName = $data['image'][0]['name'];
+            }
             if ($id) {
                 try {
                     $this->resource->load($model, $id);
@@ -83,11 +91,14 @@ class Save extends \AHT\QA\Controller\Adminhtml\Block implements HttpPostActionI
                     return $resultRedirect->setPath('*/*/');
                 }
             }
-
+            $data['image_path'] = $imageName;
             $model->setData($data);
 
             try {
                 $this->resource->save($model);
+                if ($imageName) {
+                    $this->imageUploader->moveFileFromTmp($imageName);
+                }
                 $this->messageManager->addSuccessMessage(__('You saved the block.'));
                 $this->dataPersistor->clear('aht_question');
                 return $this->processBlockReturn($model, $data, $resultRedirect);

@@ -10,6 +10,7 @@ use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Ui\DataProvider\Modifier\PoolInterface;
 use AHT\QA\Model\QuestionFactory;
 use Magento\Store\Model\StoreManagerInterface;
+use AHT\QA\Model\Question\FileInfo;
 
 /**
  * Class DataProvider
@@ -34,7 +35,9 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
      */
     protected $loadedData;
 
-    protected $storeManager;
+    protected $_storeManager;
+
+    protected $fileInfo;
     /**
      * Constructor
      *
@@ -56,6 +59,7 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         QuestionFactory $questionFactory,
         \Magento\Catalog\Model\ProductRepository $productRepository,
         StoreManagerInterface $storeManager,
+        FileInfo $fileInfo,
         array $meta = [],
         array $data = [],
         PoolInterface $pool = null
@@ -64,7 +68,8 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         $this->questionFactory = $questionFactory;
         $this->productRepository = $productRepository;
         $this->dataPersistor = $dataPersistor;
-        $this->storeManager =  $storeManager;
+        $this->_storeManager =  $storeManager;
+        $this->fileInfo = $fileInfo;
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data, $pool);
     }
 
@@ -81,14 +86,16 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         $this->collection->getSelect()
                          ->joinLeft('catalog_product_entity_varchar as pro','main_table.product_id = pro.entity_id AND pro.attribute_id = 73 ',array('*'));
         $items = $this->collection->getItems();
-        foreach($items as $item) {
-            $url = $this->storeManager->getStore()->getBaseUrl() .'catalog/product/edit/id/'.$item->getId();
-            $link = '<a href="' . $url . '">' . $item->getData('value') . '</a>';
-            $item->setData('value',$link);
-        }
+        // foreach($items as $item) {
+        //     $url = $this->storeManager->getStore()->getBaseUrl() .'catalog/product/edit/id/'.$item->getId();
+        //     $link = '<a href="' . $url . '">' . $item->getData('value') . '</a>';
+        //     $item->setData('value',$link);
+        // }
         /** @var \Magento\Cms\Model\Block $block */
         foreach ($items as $block) {
+            $block = $this->convertValues($block);
             $this->loadedData[$block->getId()] = $block->getData();
+
         }
 
         $data = $this->dataPersistor->get('aht_question');
@@ -101,4 +108,23 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
 
         return $this->loadedData;
     }
+    private function convertValues($banner)
+    {   
+        
+        $fileName = $banner->getImagePath();
+        if($fileName!='') {
+            $image = [];
+            if ($this->fileInfo->isExist($fileName)) {
+                $stat = $this->fileInfo->getStat($fileName);
+                $mime = $this->fileInfo->getMimeType($fileName);
+                $image[0]['name'] = $fileName;
+                $image[0]['url'] = $this->_storeManager->getStore()->getBaseUrl()."pub/media/question/index/".$fileName;
+                $image[0]['size'] = isset($stat) ? $stat['size'] : 0;
+                $image[0]['type'] = $mime;
+            }
+            $banner->setImage($image);
+        }
+        return $banner;
+    }
+
 }
