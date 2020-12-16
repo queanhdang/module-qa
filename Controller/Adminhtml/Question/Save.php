@@ -77,12 +77,15 @@ class Save extends \AHT\QA\Controller\Adminhtml\Block implements HttpPostActionI
             $model = $this->questionFactory->create();
 
             $id = $this->getRequest()->getParam('qa_id');
-            if (isset($data['image_path'])) {
-                $imageName = $data['image_path'];
-            }
-            if (isset($data['image'][0]['name'])) {
+            // if (isset($data['image_path'])) {
+            //     $imageName = $data['image_path'];
+            // }
+            // if (isset($data['image'][0]['name'])) {
                 $imageName = $data['image'][0]['name'];
-            }
+            // }
+            // else {
+            //     $imageName='';
+            // }
             if ($id) {
                 try {
                     $this->resource->load($model, $id);
