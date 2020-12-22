@@ -1,0 +1,6 @@
+<?php 
+$quantity = (int)$block->getData('quantity');
+$items = $block->getList($quantity);
+foreach($items as $item) { ?>
+	<h1><?= $block->getProductById($item->getId())->getName() ?></h1>
+<?php } ?>

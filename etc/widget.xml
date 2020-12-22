@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:helloworld:Magento_Widget:etc/widget.xsd">
+	<widget class="AHT\QA\Block\Widget\Featured" id="aht_qa_featured">
+		<label>Featured Product</label>
+		<description>Featured Product</description>
+		<parameters>
+			<parameter name="quantity" sort_order="10" visible="true" xsi:type="text" required="true">
+				<label>So luong san pham hien thi</label>
+			</parameter>
+            <parameter name="slider" sort_order="10" visible="true" xsi:type="select" required="true">
+				<label>Su dung slider</label>
+                <options>
+                    <option name="yes" value="yes" selected="true">
+                        <label>Yess</label>
+                    </option>
+                    <option name="no" value="no">
+                        <label>Nooo</label>
+                    </option>
+                </options>
+			</parameter>
+            <parameter name="scroll" sort_order="10" visible="true" xsi:type="text" required="true">
+				<label>Slide to scroll</label>
+			</parameter>
+		</parameters>
+	</widget>
+</widgets>

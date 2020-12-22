@@ -7,9 +7,6 @@
 -->
 <page layout="1column"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <head>
-        <css src="AHT_QA::css/custom-css.css" />
-    </head>
     <body>
         <referenceBlock name="product.info.details">
             <block class="Magento\Framework\View\Element\Template" name="qa.tab" as="qa.tab" template="AHT_QA::product/view/question.phtml" group="detailed_info" cacheable="false" ifconfig="question_pending/question/is_enabled">

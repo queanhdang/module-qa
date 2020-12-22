@@ -10,6 +10,10 @@
 $_items = $block->getQuestions();
 $format = $block->getDateFormat() ?: \IntlDateFormatter::SHORT;
 ?>
+<?php
+    echo 'hoho';
+    echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('dqaa')->toHtml();
+?>
 <?php if (count($_items)) : ?>
     <div class="block question-list" id="customer-questions">
         <?php if (!$block->getHideTitle()) : ?>

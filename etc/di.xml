@@ -12,4 +12,8 @@
             <argument name="resourceModel" xsi:type="string">AHT\QA\Model\ResourceModel\Question</argument>
         </arguments>
     </virtualType>
+    
+    <preference for="AHT\QA\Api\QuestionRepositoryInterface" type="AHT\QA\Model\QuestionRepository" />
+
+    <preference for="AHT\QA\Api\Data\QuestionInterface" type="AHT\QA\Model\Question" />
 </config>

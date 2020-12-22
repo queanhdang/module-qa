@@ -1,14 +1,18 @@
 <?php
 namespace AHT\QA\Model\ResourceModel;
 
+use Magento\Framework\EntityManager\EntityManager;
+use Magento\Framework\Model\AbstractModel;
 
 class Question extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
-	
+	protected $entityManager;
 	public function __construct(
-		\Magento\Framework\Model\ResourceModel\Db\Context $context
+		\Magento\Framework\Model\ResourceModel\Db\Context $context,
+		EntityManager $entityManager
 	)
 	{
+		$this->entityManager = $entityManager;
 		parent::__construct($context);
 	}
 	
@@ -16,5 +20,6 @@ class Question extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 	{
 		$this->_init('aht_question', 'qa_id');
 	}
+
 	
 }
