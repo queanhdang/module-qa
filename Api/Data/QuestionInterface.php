@@ -52,6 +52,12 @@ interface QuestionInterface
      *
      * @return int
      */
+    public function getProductId();
+    /**
+     * Undocumented function
+     *
+     * @return int
+     */
     /**
      * Undocumented function
      *
@@ -111,5 +117,12 @@ interface QuestionInterface
      * @return null
      */
     public function setAnswer($answer);
+    /**
+     * Undocumented function
+     *
+     * @param int $productId
+     * @return null
+     */
+    public function setProductId($productId);
 
 }

@@ -16,18 +16,6 @@
     <?= $block->getChildHtml('form_fields_before') ?>
     <input type="text" name="productid" value="<?= $block->getCurrentProduct()->getId()?>" hidden/>
     <fieldset class="fieldset qa-fieldset" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
-        <div class="field qa-field-nickname required">
-            <label for="nickname_field" class="label"><span><?= $block->escapeHtml(__('Nickname')) ?></span></label>
-            <div class="control">
-                <input type="text" name="name" id="nickname_field" class="input-text" data-validate="{required:true}" data-bind="value: nickname()" />
-            </div>
-        </div>
-        <div class="field qa-field-email required">
-            <label for="email_field" class="label"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
-            <div class="control">
-                <input type="text" name="email" id="email_field" class="input-text" data-validate="{required:true, 'validate-email':true}" data-bind="value: email()" />
-            </div>
-        </div>
         <div class="field qa-field-question required">
             <label for="question_field" class="label"><span><?= $block->escapeHtml(__('Your Question')) ?></span></label>
             <div class="control">

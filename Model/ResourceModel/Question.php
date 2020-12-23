@@ -6,18 +6,15 @@ use Magento\Framework\Model\AbstractModel;
 
 class Question extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
-	protected $entityManager;
+
 	public function __construct(
-		\Magento\Framework\Model\ResourceModel\Db\Context $context,
-		EntityManager $entityManager
-	)
-	{
-		$this->entityManager = $entityManager;
+		\Magento\Framework\Model\ResourceModel\Db\Context $context
+	) {
+
 		parent::__construct($context);
 	}
 	
-	protected function _construct()
-	{
+	protected function _construct() {
 		$this->_init('aht_question', 'qa_id');
 	}
 

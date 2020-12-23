@@ -32,7 +32,7 @@ class View extends \Magento\Catalog\Block\Product\AbstractProduct
      *
      * @var \AHT\QA\Model\QuestionFactory
      */
-    protected $_reviewFactory;
+    protected $_questionFactory;
 
     /**
      * @var \Magento\Customer\Helper\Session\CurrentCustomer
@@ -88,7 +88,7 @@ class View extends \Magento\Catalog\Block\Product\AbstractProduct
     }
 
     /**
-     * Get review data
+     * Get question data
      *
      * @return Question
      */

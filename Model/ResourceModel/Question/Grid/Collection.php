@@ -62,13 +62,8 @@ class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvide
                 'catalog_product_entity_varchar.value'
             ]);   
            
-        $this->addFilterToMap('id', 'main_table.id');
+        // $this->addFilterToMap('id', 'main_table.id');
         return $this;
     }
 
-    
-
-    public function abc(){
-        echo '123';
-    }
 }

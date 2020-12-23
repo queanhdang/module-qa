@@ -16,4 +16,10 @@
     <preference for="AHT\QA\Api\QuestionRepositoryInterface" type="AHT\QA\Model\QuestionRepository" />
 
     <preference for="AHT\QA\Api\Data\QuestionInterface" type="AHT\QA\Model\Question" />
+    <type name="Magento\Catalog\Model\Product">
+      <plugin name="product_plugin" type="AHT\QA\Plugin\ProductPlugin" sortOrder="1" disabled="false" />
+    </type>
+    <type name="Magento\Customer\Api\AccountManagementInterface">
+      <plugin name="customer_plugin" type="AHT\QA\Plugin\CustomerPlugin" sortOrder="1" disabled="false" />
+    </type>
 </config>

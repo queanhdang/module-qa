@@ -22,9 +22,9 @@ class Index extends CustomerController
         if ($navigationBlock = $resultPage->getLayout()->getBlock('customer_account_navigation')) {
             $navigationBlock->setActive('qanda/customer');
         }
-        if ($block = $resultPage->getLayout()->getBlock('question_customer_list')) {
-            $block->setRefererUrl($this->_redirect->getRefererUrl());
-        }
+        // if ($block = $resultPage->getLayout()->getBlock('question_customer_list')) {
+        //     $block->setRefererUrl($this->_redirect->getRefererUrl());
+        // }
         $resultPage->getConfig()->getTitle()->set(__('My recent Questions'));
         return $resultPage;
     }

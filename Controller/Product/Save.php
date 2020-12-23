@@ -21,6 +21,7 @@ class Save extends \Magento\Framework\App\Action\Action
 	protected $_redirect;
 	protected $_customerSession;
 	protected $_storeManager;
+	protected $messageManager;
 
 	public function __construct(
 		\Magento\Framework\App\Action\Context $context,
@@ -46,6 +47,7 @@ class Save extends \Magento\Framework\App\Action\Action
 		$this->_cacheTypeList = $cacheTypeList;
 		$this->_cacheFrontendPool = $cacheFrontendPool;
 		$this->_redirect = $resultRedirect;
+		$this->messageManager = $context->getMessageManager();
 		return parent::__construct($context);
 	}
 
@@ -53,17 +55,24 @@ class Save extends \Magento\Framework\App\Action\Action
 	{
 
 		$question = $this->_questionFactory->create();
-		if (isset($_POST['createbtn'])) {
-			$question->setName($_POST['name']);
-            $question->setEmail($_POST['email']);
-            $question->setQuestion($_POST['question']);
-			$question->setProductId($_POST['productid']);
-			$question->setUserId($this->_customerSession->getCustomerId());
-			$question->setStoreId($this->_storeManager->getStore()->getId());
-			$question->setCreatedAt(date('Y-m-d H:i:s'));
-			$question->setUpdatedAt(date('Y-m-d H:i:s'));
+		try {
+			if (isset($_POST['createbtn'])) {
+				$question->setName($this->_customerSession->getCustomerData()->getLastname());
+				$question->setEmail($this->_customerSession->getCustomerData()->getEmail());
+				$question->setQuestion($this->getRequest()->getParam("question"));
+				$question->setProductId($this->getRequest()->getParam("productid"));
+				$question->setUserId($this->_customerSession->getCustomerId());
+				$question->setStoreId($this->_storeManager->getStore()->getId());
+				$question->setCreatedAt(date('Y-m-d H:i:s'));
+				$question->setUpdatedAt(date('Y-m-d H:i:s'));
+			}
+			$this->_questionResource->save($question);
+			$this->messageManager->addSuccessMessage("You submitted your question for moderation");
+		} catch (\Exception $e) {
+
+			$this->messageManager->addErrorMessage("We can\'t post your question right now.");
 		}
-		$this->_questionResource->save($question);
+		
        
         $types = array('config','layout','block_html','collections','reflection','db_ddl','compiled_config','eav','config_integration','config_integration_api','full_page','translate','config_webservice','vertex');
 		foreach ($types as $type) {

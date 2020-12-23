@@ -78,8 +78,7 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
      *
      * @return array
      */
-    public function getData()
-    {
+    public function getData() {
         if (isset($this->loadedData)) {
             return $this->loadedData;
         }
@@ -108,8 +107,7 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
 
         return $this->loadedData;
     }
-    private function convertValues($banner)
-    {   
+    private function convertValues($banner) {   
         
         $fileName = $banner->getImagePath();
         if($fileName!='') {

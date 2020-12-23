@@ -134,6 +134,15 @@ class Question extends \Magento\Framework\Model\AbstractModel implements \AHT\QA
     /**
      * Undocumented function
      *
+     * @param int
+     * @return null
+     */
+    public function setProductId($productId) {
+        return $this->setData("product_id", $productId);
+    }
+    /**
+     * Undocumented function
+     *
      * @param string $email
      * @return null
      */
